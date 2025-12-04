@@ -3,85 +3,154 @@
 
 export const courseContent = [
   {
-    id: 'level-1',
-    title: 'Level 1 – Seeing Objects Everywhere',
-    description: 'Goal: connect everyday objects → software objects.',
+    id: 'hidden-python',
+    title: 'The Hidden Python Interpreter',
+    description: 'Version 2.0.0 - Visual First',
     lessons: [
       {
-        id: 'what-is-object',
-        title: 'What is an Object, Really?',
+        id: 'PHASE_1_BOOT',
+        title: 'The Boot: Setting the Anchor',
         content: `
-### What is an Object, Really?
+### The Boot: Setting the Anchor
 
-A cup on your table, a file on your computer, and a "user" in a website’s database all have three things in common:
-**identity**, **properties**, and **actions**.
+**Scenario:** You double-click a Python script. The screen goes black. The Operating System is waking up.
 
-In object-oriented programming, an object is not some magic thing inside the CPU — it is a structured way of talking about "something" so the computer can store its properties and perform its actions.
+**The Problem:** Your script needs memory to live in, but memory is a chaotic ocean of random bytes. How does Python find its footing in this chaos?
+
+It needs a fixed point. A "North Star" that never moves.
         `,
-        widgetId: 'ObjectIdentityWidget',
-        instructions: 'Drag the labels "Identity", "Properties", and "Actions" onto the correct parts of the objects.'
+        widgetId: 'PythonInterpreterWidget',
+        widgetProps: {
+            phase: 'PHASE_1_BOOT',
+            challenge: {
+                question: "Where does Python plant its first flag in memory?",
+                options: ["The Heap (Dynamic)", "The Stack (Temporary)", "Static Data (Fixed)"],
+                correctAnswer: "Static Data (Fixed)"
+            },
+            visual: {
+                type: 'ANCHOR',
+                title: "The Root Metaclass",
+                description: "PyType_Type (0x100A)"
+            },
+            xRay: "The OS maps `python.exe` to a hard-coded address. `PyType_Type` is the only object in Python that isn't born—it just *is*."
+        },
+        instructions: 'Answer the challenge to reveal the architecture.'
       },
       {
-        id: 'class-vs-object',
-        title: 'Class vs Object – Blueprint vs House',
+        id: 'PHASE_2_COMPILATION',
+        title: 'The Compilation: The Whistle',
         content: `
-### Class vs Object
+### The Compilation: The Whistle
 
-A class is a design, an object is a built thing.
+**Scenario:** You write \`class person:\` and save the file.
 
-**Physical**: we can touch the house.
-**Logical rule**: "HousePlan with 2 floors and 3 rooms" is an idea we use to build many houses.
+**The Problem:** The CPU speaks binary, not English. It sees your code as meaningless graffiti. It needs a command to start the factory.
 
-In code, a **class** is the plan; each **object** (instance) is one actual house in memory.
+We need a translator to convert your high-level intent into a mechanical signal.
         `,
-        widgetId: 'BlueprintWidget',
-        instructions: 'Click the blueprint to spawn new house objects into memory.'
-      }
-    ]
-  },
-  {
-    id: 'level-2',
-    title: 'Level 2 – Variables and Memory',
-    description: 'Here we attack your variable confusion explicitly.',
-    lessons: [
-      {
-        id: 'variables-math-vs-code',
-        title: 'Variables in Math vs Variables in Code',
-        content: `
-### Variables in Math vs Code
-
-In math, a variable often means "some unknown value":
-$f(x) = x^2 + 2$ → "x could be anything".
-
-In programming, a variable is different: it is a **name** attached to a specific **memory location** that currently holds a value.
-
-*   The **name** is not physical. It’s a label in our source code.
-*   The **memory cell** is physical: tiny electronic switches storing bits.
-*   The **value** is the pattern of bits in that cell at this moment.
-
-So a programming variable is our handle to a physical spot in memory, not some mysterious "unknown".
-        `,
-        widgetId: 'MemoryCellWidget',
-        instructions: 'Click "Run" to see how the variable name maps to a physical memory address.'
+        widgetId: 'PythonInterpreterWidget',
+        widgetProps: {
+            phase: 'PHASE_2_COMPILATION',
+            challenge: {
+                question: "What does 'class person:' become before execution?",
+                options: ["A Function", "Opcode 71", "A String"],
+                correctAnswer: "Opcode 71"
+            },
+            visual: {
+                type: 'GEAR',
+                title: "LOAD_BUILD_CLASS",
+                description: "Opcode 71"
+            },
+            xRay: "The Parser shreds your text into Bytecode. Opcode 71 is the specific signal that wakes up the Class-Building machinery."
+        },
+        instructions: 'Guess the translation output.'
       },
       {
-        id: 'variables-as-references',
-        title: 'A Variable is a Pointer',
+        id: 'PHASE_3_ALLOCATION',
+        title: 'Construction: Breaking Ground',
         content: `
-### A Variable is a Pointer
+### Construction: Breaking Ground
 
-In many languages (like Python objects, or Java references), the variable doesn’t hold the object itself.
-It holds a **reference**: a tiny value (like a memory address) that tells the CPU where the real object lives.
+**Scenario:** The signal (Opcode 71) has been fired. The machinery starts rumbling.
 
-**Physical layer:**
-*   Some bytes in RAM store the object’s data.
-*   Some other bytes store the address of that object.
+**The Problem:** We need space to build this new class, and we need to define what it *is*.
 
-**Rule layer:**
-We pretend the variable is the object, so code is easier to write and read.
+The engine makes a phone call to the OS, demanding land. But land alone isn't enough—it needs a legal designation.
         `,
-        widgetId: 'ReferenceWidget',
-        instructions: 'Reassign variable "x" and watch the reference arrow move.'
+        widgetId: 'PythonInterpreterWidget',
+        widgetProps: {
+            phase: 'PHASE_3_ALLOCATION',
+            challenge: {
+                question: "How does the new object know it is a Type?",
+                options: ["It guesses", "It links to the Root", "It checks the filename"],
+                correctAnswer: "It links to the Root"
+            },
+            visual: {
+                type: 'CONSTRUCTION',
+                title: "Memory Allocation",
+                description: "Address 0x8000"
+            },
+            xRay: "We `malloc` a generic block at 0x8000. Then, we wire its `ob_type` field directly to the Root Metaclass at 0x100A. Now it's a Type."
+        },
+        instructions: 'Identify the source of identity.'
+      },
+      {
+        id: 'PHASE_3_INHERITANCE',
+        title: 'Construction: The Copy-Paste',
+        content: `
+### Construction: The Copy-Paste
+
+**Scenario:** You wrote \`pass\`. Your blueprint is blank.
+
+**The Problem:** A car factory can't build cars without blueprints. If you don't provide instructions for how to create or initialize the object, the factory stalls.
+
+The solution? Industrial espionage. The engine steals the plans from the default models.
+        `,
+        widgetId: 'PythonInterpreterWidget',
+        widgetProps: {
+            phase: 'PHASE_3_INHERITANCE',
+            challenge: {
+                question: "Where do the default behaviors come from?",
+                options: ["The Base Object", "The Compiler", "Random Memory"],
+                correctAnswer: "The Base Object"
+            },
+            visual: {
+                type: 'BLUEPRINT',
+                title: "Method Resolution",
+                description: "Copying Defaults"
+            },
+            xRay: "Since `tp_new` is null, we copy the pointer from `object_new`. We fill the gaps with standard parts."
+        },
+        instructions: 'Determine the fallback strategy.'
+      },
+      {
+        id: 'PHASE_4_INSTANCE',
+        title: 'The Instance: Body & Soul',
+        content: `
+### The Instance: Body & Soul
+
+**Scenario:** The factory is finished. You type \`p = person()\`.
+
+**The Problem:** We need a concrete instance. This requires two distinct actions: building the physical container (Allocation) and giving it values (Initialization).
+
+It's a two-step dance: Body first, Soul second.
+        `,
+        widgetId: 'PythonInterpreterWidget',
+        widgetProps: {
+            phase: 'PHASE_4_INSTANCE',
+            challenge: {
+                question: "Which step happens first?",
+                options: ["__init__ (Soul)", "__new__ (Body)", "Garbage Collection"],
+                correctAnswer: "__new__ (Body)"
+            },
+            visual: {
+                type: 'FACTORY',
+                title: "Instantiation",
+                description: "The Call Cycle"
+            },
+            xRay: "1. `tp_new` calls malloc to create the Grey Box (Body). 2. `tp_init` is called to set properties (Soul). Only then is the object returned."
+        },
+        instructions: 'Order the creation events.'
       }
     ]
   }
