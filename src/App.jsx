@@ -5,6 +5,7 @@ import { ObjectIdentityWidget } from './components/widgets/ObjectIdentityWidget'
 import { BlueprintWidget } from './components/widgets/BlueprintWidget';
 import { MemoryCellWidget } from './components/widgets/MemoryCellWidget';
 import { ReferenceWidget } from './components/widgets/ReferenceWidget';
+import { PythonInterpreterWidget } from './components/widgets/PythonInterpreterWidget';
 import { courseContent } from './lib/courseContent';
 
 const WIDGET_REGISTRY = {
@@ -12,6 +13,7 @@ const WIDGET_REGISTRY = {
   'BlueprintWidget': BlueprintWidget,
   'MemoryCellWidget': MemoryCellWidget,
   'ReferenceWidget': ReferenceWidget,
+  'PythonInterpreterWidget': PythonInterpreterWidget,
 };
 
 function App() {
@@ -54,6 +56,7 @@ function App() {
   const canPrev = !(currentLevelIndex === 0 && currentLessonIndex === 0);
 
   const WidgetComponent = WIDGET_REGISTRY[currentLesson.widgetId];
+  const widgetProps = currentLesson.widgetProps || {};
 
   return (
     <CourseShell
@@ -84,7 +87,7 @@ function App() {
             <ReactMarkdown>{currentLesson.content}</ReactMarkdown>
           </div>
         }
-        widget={WidgetComponent ? <WidgetComponent /> : null}
+        widget={WidgetComponent ? <WidgetComponent {...widgetProps} /> : null}
       />
     </CourseShell>
   );
