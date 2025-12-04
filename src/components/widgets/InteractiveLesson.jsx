@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, X, Anchor, Settings, Hammer, FileCode, Play, Box, Zap, Copy, ArrowRight, ScanLine, Truck, PenTool } from 'lucide-react';
+import { Check, X, Anchor, Settings, Hammer, FileCode, Play, Box, Zap, Copy, ArrowRight, ScanLine } from 'lucide-react';
 
 export function InteractiveLesson({ challenge, visual, xRay }) {
   const [hasAnswered, setHasAnswered] = useState(false);
@@ -16,7 +16,7 @@ export function InteractiveLesson({ challenge, visual, xRay }) {
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center p-6 relative bg-white text-slate-900 font-sans">
+    <div className="w-full h-full flex flex-col items-center justify-center p-6 relative bg-slate-50 text-slate-900 font-sans">
       <AnimatePresence mode="wait">
         {!hasAnswered ? (
           <ChallengeCard
@@ -47,28 +47,23 @@ function ChallengeCard({ question, options, onOptionClick }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4 }}
-      className="bg-white rounded-3xl shadow-xl max-w-lg w-full text-center overflow-hidden border border-slate-100"
+      className="bg-white rounded-3xl shadow-xl p-8 max-w-lg w-full text-center border border-slate-100"
     >
-      {/* Header Gradient */}
-      <div className="h-3 bg-gradient-to-r from-purple-500 via-pink-500 to-amber-500 w-full" />
-
-      <div className="p-8">
-        <div className="mb-8">
-            <h3 className="text-2xl font-bold text-slate-900 leading-tight">
-            {question}
-            </h3>
-        </div>
-        <div className="flex flex-col gap-3">
-            {options.map((option, idx) => (
-            <button
-                key={idx}
-                onClick={() => onOptionClick(option)}
-                className="w-full py-4 px-6 rounded-xl border-2 border-slate-100 bg-white text-slate-700 font-semibold hover:border-black hover:bg-slate-50 transition-all text-lg shadow-sm hover:shadow-md active:scale-[0.98]"
-            >
-                {option}
-            </button>
-            ))}
-        </div>
+      <div className="mb-8">
+        <h3 className="text-2xl font-bold text-slate-900 leading-tight">
+          {question}
+        </h3>
+      </div>
+      <div className="flex flex-col gap-3">
+        {options.map((option, idx) => (
+          <button
+            key={idx}
+            onClick={() => onOptionClick(option)}
+            className="w-full py-4 px-6 rounded-xl border border-slate-200 bg-white text-slate-700 font-semibold hover:border-black hover:bg-slate-50 transition-all text-lg shadow-sm hover:shadow-md active:scale-[0.98]"
+          >
+            {option}
+          </button>
+        ))}
       </div>
     </motion.div>
   );
@@ -124,17 +119,14 @@ function VisualReveal({ visual, xRay, isCorrect, userChoice, correctChoice }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="bg-white rounded-2xl shadow-lg border border-slate-100 max-w-md w-full overflow-hidden"
+        className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 max-w-md w-full"
       >
-         <div className="h-1 bg-gradient-to-r from-blue-400 to-indigo-500 w-full" />
-         <div className="p-6">
-            <div className="flex items-center gap-2 mb-3 text-indigo-500 font-bold uppercase text-xs tracking-wider">
-                <ScanLine size={14} /> X-Ray Vision
-            </div>
-            <p className="text-slate-600 text-lg leading-relaxed font-medium">
-            {xRay}
-            </p>
+         <div className="flex items-center gap-2 mb-3 text-slate-400 font-bold uppercase text-xs tracking-wider">
+            <ScanLine size={14} /> X-Ray Vision
          </div>
+         <p className="text-slate-600 text-lg leading-relaxed font-medium">
+           {xRay}
+         </p>
       </motion.div>
     </div>
   );
@@ -144,12 +136,9 @@ function VisualIcon({ type }) {
   switch (type) {
     case 'ANCHOR':
       return (
-        <div className="relative flex flex-col items-center">
-           {/* Glow Effect */}
-           <div className="absolute inset-0 bg-red-500 blur-[60px] opacity-20 rounded-full animate-pulse" />
-           {/* Icon */}
-           <Anchor size={140} className="text-red-600 relative z-10 drop-shadow-2xl" strokeWidth={1.5} />
-           <div className="text-6xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0">⚓️</div>
+        <div className="relative">
+           <div className="absolute inset-0 bg-red-500 blur-3xl opacity-20 rounded-full animate-pulse" />
+           <Anchor size={120} className="text-red-600 relative z-10 drop-shadow-2xl" />
         </div>
       );
     case 'GEAR':
@@ -157,54 +146,57 @@ function VisualIcon({ type }) {
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-          className="relative"
         >
-           <Settings size={140} className="text-amber-500 drop-shadow-xl" strokeWidth={1.5} />
-           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl font-black text-amber-700">71</div>
+           <Settings size={120} className="text-amber-500 drop-shadow-xl" />
         </motion.div>
       );
     case 'CONSTRUCTION':
       return (
-         <div className="relative">
-            <div className="absolute -inset-10 bg-blue-500 blur-[50px] opacity-10 rounded-full" />
-            <Hammer size={120} className="text-blue-500 relative z-10 drop-shadow-xl" strokeWidth={1.5} />
-            <div className="absolute -right-4 bottom-0 bg-white p-2 rounded-full shadow-lg text-4xl">🏗️</div>
+         <div className="flex items-end gap-2">
+            <motion.div
+               initial={{ height: 0 }}
+               animate={{ height: 100 }}
+               className="w-24 bg-slate-300 rounded-t-lg border-2 border-slate-400 relative overflow-hidden"
+            >
+               <div className="absolute inset-0 grid grid-cols-2 grid-rows-4 gap-1 p-1 opacity-20">
+                  {[...Array(8)].map((_,i) => <div key={i} className="bg-slate-600 rounded-sm" />)}
+               </div>
+            </motion.div>
+            <Hammer size={80} className="text-blue-500 -mb-2" />
          </div>
       );
     case 'BLUEPRINT':
       return (
         <div className="relative">
-           <FileCode size={120} className="text-slate-300" strokeWidth={1} />
+           <FileCode size={100} className="text-slate-300" />
            <motion.div
-             className="absolute -right-6 -bottom-6 bg-white p-3 rounded-full shadow-xl border border-slate-100"
+             className="absolute -right-4 -bottom-4 bg-white p-2 rounded-full shadow-lg border border-slate-100"
              initial={{ scale: 0 }}
              animate={{ scale: 1 }}
              transition={{ delay: 0.5 }}
            >
-              <Copy size={50} className="text-emerald-500" />
+              <Copy size={40} className="text-emerald-500" />
            </motion.div>
-           <div className="absolute -left-6 -top-6 text-5xl">📋</div>
         </div>
       );
     case 'FACTORY':
       return (
-        <div className="flex items-center gap-6">
-           <div className="flex flex-col items-center p-4 bg-slate-50 rounded-2xl border-2 border-slate-100">
+        <div className="flex items-center gap-4">
+           <div className="flex flex-col items-center">
               <Box size={60} className="text-slate-400" />
               <span className="text-xs font-bold text-slate-400 mt-2">BODY</span>
            </div>
-           <ArrowRight size={40} className="text-slate-300" />
-           <div className="flex flex-col items-center p-4 bg-white rounded-2xl shadow-lg border border-yellow-100 relative overflow-hidden">
-              <div className="absolute inset-0 bg-yellow-500/10 animate-pulse" />
+           <ArrowRight size={30} className="text-slate-300" />
+           <div className="flex flex-col items-center">
               <div className="relative">
                  <Box size={60} className="text-slate-800" />
-                 <Zap size={30} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-yellow-400 fill-yellow-400" />
+                 <Zap size={24} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-yellow-400 fill-yellow-400" />
               </div>
-              <span className="text-xs font-bold text-slate-800 mt-2 relative z-10">SOUL</span>
+              <span className="text-xs font-bold text-slate-800 mt-2">SOUL</span>
            </div>
         </div>
       );
     default:
-      return <Play size={120} className="text-slate-300" />;
+      return <Play size={100} className="text-slate-300" />;
   }
 }

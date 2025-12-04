@@ -6,7 +6,6 @@ import { BlueprintWidget } from './components/widgets/BlueprintWidget';
 import { MemoryCellWidget } from './components/widgets/MemoryCellWidget';
 import { ReferenceWidget } from './components/widgets/ReferenceWidget';
 import { PythonInterpreterWidget } from './components/widgets/PythonInterpreterWidget';
-import { InteractiveLesson } from './components/widgets/InteractiveLesson';
 import { courseContent } from './lib/courseContent';
 
 const WIDGET_REGISTRY = {
@@ -15,7 +14,6 @@ const WIDGET_REGISTRY = {
   'MemoryCellWidget': MemoryCellWidget,
   'ReferenceWidget': ReferenceWidget,
   'PythonInterpreterWidget': PythonInterpreterWidget,
-  'InteractiveLesson': InteractiveLesson,
 };
 
 function App() {
